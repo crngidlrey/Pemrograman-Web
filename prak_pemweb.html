@@ -165,8 +165,7 @@
     document.getElementById('registrationForm').addEventListener('submit', function (e) {
         e.preventDefault();
         
-        if (!usernameError.style.display && !emailError.style.display &&
-            !passwordError.style.display && !confirmPasswordError.style.display) {
+        if (username && email && password && confirmPassword) {
             alert('Pendaftaran berhasil!');
         } else {
             alert('Mohon perbaiki kesalahan pada formulir.');
