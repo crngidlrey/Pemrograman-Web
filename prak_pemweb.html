@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Pendaftaran Pengguna</title>
+    <style>
+        /* Gaya Umum */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
+        }
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            max-width: 400px;
+            width: 100%;
+            animation: fadeIn 0.5s ease-in-out;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .input-field {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .alert {
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+        .alert.error {
+            color: red;
+        }
+        .alert.success {
+            color: green;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Formulir Pendaftaran Pengguna</h2>
+    <form id="registrationForm">
+        <div class="input-field">
+            <label for="username">Username (5-20 karakter, alfanumerik):</label>
+            <input type="text" id="username" required>
+            <div class="alert error" id="usernameError">Username harus 5-20 karakter dan alfanumerik.</div>
+        </div>
+        <div class="input-field">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+            <div class="alert error" id="emailError">Format email tidak valid.</div>
+        </div>
+        <div class="input-field">
+            <label for="password">Password (minimal 8 karakter, harus mencakup angka dan huruf):</label>
+            <input type="password" id="password" required>
+            <div class="alert error" id="passwordError">Password harus minimal 8 karakter, mengandung huruf dan angka.</div>
+            <div class="alert success" id="passwordSuccess">Password kuat.</div>
+        </div>
+        <div class="input-field">
+            <label for="confirmPassword">Konfirmasi Password:</label>
+            <input type="password" id="confirmPassword" required>
+            <div class="alert error" id="confirmPasswordError">Password tidak cocok.</div>
+        </div>
+        <button type="submit" class="btn-submit">Daftar</button>
+    </form>
+</div>
+
+<script>
+    const username = document.getElementById('username');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    
+    const usernameError = document.getElementById('usernameError');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const passwordSuccess = document.getElementById('passwordSuccess');
+    const confirmPasswordError = document.getElementById('confirmPasswordError');
+    
+    username.addEventListener('input', () => {
+        const usernamePattern = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{5,20}$/;
+        if (usernamePattern.test(username.value)) {
+            usernameError.style.display = 'none';
+        } else {
+            usernameError.style.display = 'block';
+        }
+    });
+    
+    email.addEventListener('input', () => {
+        const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+        if (emailPattern.test(email.value)) {
+            emailError.style.display = 'none';
+        } else {
+            emailError.style.display = 'block';
+        }
+    });
+    
+    password.addEventListener('input', () => {
+        const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        if (passwordPattern.test(password.value)) {
+            passwordError.style.display = 'none';
+            passwordSuccess.style.display = 'block';
+        } else {
+            passwordError.style.display = 'block';
+            passwordSuccess.style.display = 'none';
+        }
+    });
+    
+    confirmPassword.addEventListener('input', () => {
+        if (confirmPassword.value === password.value) {
+            confirmPasswordError.style.display = 'none';
+        } else {
+            confirmPasswordError.style.display = 'block';
+        }
+    });
+    
+    document.getElementById('registrationForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        
+        if (!usernameError.style.display && !emailError.style.display &&
+            !passwordError.style.display && !confirmPasswordError.style.display) {
+            alert('Pendaftaran berhasil!');
+        } else {
+            alert('Mohon perbaiki kesalahan pada formulir.');
+        }
+    });
+</script>
+
+</body>
+</html>
